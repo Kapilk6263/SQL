@@ -1,0 +1,172 @@
+SQL>  1  CREATE TABLE DETAILS (
+  2  NAME VARCHAR(20) NOT NULL,
+  3  SURNAME VARCHAR(20) ,
+  4  EMAIL  VARCHAR(50) UNIQUE ,
+  5  MOBILE_NO NUMBER(10) CHECK(MOBILE_NO>0) ,
+  6  AGE NUMBER(3) ,
+  7 GENDER CHAR(1) );
+
+Table created.
+
+SQL> DESC DETAILS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ NAME                                                                                                              NOT NULL VARCHAR2(20)
+ SURNAME                                                                                                                    VARCHAR2(20)
+ EMAIL                                                                                                                      VARCHAR2(50)
+ MOBILE_NO                                                                                                                  NUMBER(10)
+ AGE                                                                                                                        NUMBER(3)
+ GENDER                                                                                                                     CHAR(1)
+
+SQL>  1  INSERT INTO DETAILS (NAME ,SURNAME,EMAIL,MOBILE_NO,AGE,GENDER)
+  2 VALUES ('KAPIL','UPLAWDIYA','KAPILKAPIL6465@GMAIL.COM',6263509417,21,'M');
+
+1 row created.
+
+SQL> SELECT * FROM DETAILS ;
+
+NAME                 SURNAME              EMAIL                                               MOBILE_NO        AGE G                                                                                    
+-------------------- -------------------- -------------------------------------------------- ---------- ---------- -                                                                                    
+KAPIL                UPLAWDIYA            KAPILKAPIL6465@GMAIL.COM                           6263509417         21 M                                                                                    
+
+SQL> SELECT * FROM STUDENTS ;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                     
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                     
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                              
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                              
+
+8 rows selected.
+
+SQL> ALTER TABLE DETAILS
+  2  RENAME COLUMN MOBILE_NO TO MOBILE_NUBER;
+
+Table altered.
+
+SQL> DESC DETAILS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ NAME                                                                                                              NOT NULL VARCHAR2(20)
+ SURNAME                                                                                                                    VARCHAR2(20)
+ EMAIL                                                                                                                      VARCHAR2(50)
+ MOBILE_NUBER                                                                                                               NUMBER(10)
+ AGE                                                                                                                        NUMBER(3)
+ GENDER                                                                                                                     CHAR(1)
+
+SQL> ALTER TABLE DETAILS
+  2  RENAME COLUMN MOBILE_NUBER TO MOBILE_NUMBER;
+
+Table altered.
+
+SQL> DESC DETAILS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ NAME                                                                                                              NOT NULL VARCHAR2(20)
+ SURNAME                                                                                                                    VARCHAR2(20)
+ EMAIL                                                                                                                      VARCHAR2(50)
+ MOBILE_NUMBER                                                                                                              NUMBER(10)
+ AGE                                                                                                                        NUMBER(3)
+ GENDER                                                                                                                     CHAR(1)
+
+SQL> ALTER TABLE DETAILS
+  2  DROP COLUMN GENDER;
+
+Table altered.
+
+SQL> DESC DETAILS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ NAME                                                                                                              NOT NULL VARCHAR2(20)
+ SURNAME                                                                                                                    VARCHAR2(20)
+ EMAIL                                                                                                                      VARCHAR2(50)
+ MOBILE_NUMBER                                                                                                              NUMBER(10)
+ AGE                                                                                                                        NUMBER(3)
+
+SQL> ALTER TABLE DETAILS
+  2  MODIEFY NAME CHAR(10);
+MODIEFY NAME CHAR(10)
+*
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE DETAILS
+  2* MODIFY NAME CHAR(10)
+SQL> /
+
+Table altered.
+
+SQL> DESC DETAILS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ NAME                                                                                                              NOT NULL CHAR(10)
+ SURNAME                                                                                                                    VARCHAR2(20)
+ EMAIL                                                                                                                      VARCHAR2(50)
+ MOBILE_NUMBER                                                                                                              NUMBER(10)
+ AGE                                                                                                                        NUMBER(3)
+
+SQL> ALTER TABLE DETAILS
+  2  ADD CONSTAINT UN-NUMBER UNIQUE(MOBILE_NUMBERZ);
+ADD CONSTAINT UN-NUMBER UNIQUE(MOBILE_NUMBERZ)
+                *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> E
+SP2-0042: unknown command "E" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE DETAILS
+  2* ADD CONSTAINT U_MOBILE_NUMBER UNIQUE(MOBILE_NUMBER)
+SQL> /
+ADD CONSTAINT U_MOBILE_NUMBER UNIQUE(MOBILE_NUMBER)
+                                     *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE DETAILS
+  2* ADD CONSTAINT UNIQUE(MOBILE_NUMBER)
+SQL> /
+ADD CONSTAINT UNIQUE(MOBILE_NUMBER)
+                     *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE DETAILS
+  2* ADD CONSTRAINT UNIQUE(MOBILE_NUMBER)
+SQL> /
+ADD CONSTRAINT UNIQUE(MOBILE_NUMBER)
+                      *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> INSERT INTO DETAILS (NAME,SURNAME,EMAIL,MOBILE_NUMBER,AGE)
+  2  VALUES ('ROHIT','KALMODIYA','ROHIT244@GMAIL.COM',7489584980,22);
+
+1 row created.
+
+SQL> COMMIT ;
+
+Commit complete.
+
+SQL> spool off
