@@ -1,0 +1,110 @@
+SQL> 
+SQL> SET PAGES 200 LINES 200
+SQL> SELECT ENAME
+  2  FROM EMO
+  3  
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4               FROM EMP
+  5               WHERE ENAME LIKE 'SMITH');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+FORD                                                                                                                                                                                                    
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE MGR=(SELECT EMPNO
+  4            FROM EMP
+  5            WHERE ENAME LIKE 'FORD');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+SMITH                                                                                                                                                                                                   
+
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4                    FROM EMP
+  5                  WHERE ENAME =(SELECT ENAME FROM EMP
+  6  
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO
+  4                    FROM EMP
+  5                  WHERE ENAME =(SELECT ENAME FROM EMP
+  6                                WHERE EMPNO=(SELECT MGR FROM EMP WHERE ENAME LIKE 'JAMES')));
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+SALES          CHICAGO                                                                                                                                                                                  
+
+SQL> SELECT * FROM DEPT
+  2  WHERE DEPTNO IN(SELECT DEPTNO FROM EMP
+  3                    WHERE ENAME =(SELECT ENAME FROM EMP
+  4  
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> SELECT * FROM DEPT
+  2  WHERE DEPTNO IN(SELECT DEPTNO FROM EMP
+  3                    WHERE ENAME =(SELECT ENAME FROM EMP
+  4                                  WHERE MGR =(SELECT EMPNO FROM EMP
+  5                                                WHERE ENAME LIKE 'WARD')));
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM DEPT
+  2  WHERE DEPTNO IN(SELECT DEPTNO FROM EMP
+  3                    WHERE ENAME =(SELECT ENAME FROM EMP
+  4                                  WHERE MGR =(SELECT EMPNO FROM EMP
+  5*                                               WHERE ENAME LIKE 'BLAKE')))
+SQL> /
+                  WHERE ENAME =(SELECT ENAME FROM EMP
+                                *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM DEPT
+  2  WHERE DEPTNO IN(SELECT DEPTNO FROM EMP
+  3                    WHERE ENAME =(SELECT ENAME FROM EMP
+  4                                  WHERE MGR IN(SELECT EMPNO FROM EMP
+  5*                                               WHERE ENAME LIKE 'BLAKE')))
+SQL> /
+                  WHERE ENAME =(SELECT ENAME FROM EMP
+                                *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT * FROM DEPT
+  2  WHERE DEPTNO IN(SELECT DEPTNO FROM EMP
+  3                    WHERE ENAME IN(SELECT ENAME FROM EMP
+  4                                  WHERE MGR IN(SELECT EMPNO FROM EMP
+  5*                                               WHERE ENAME LIKE 'BLAKE')))
+SQL> /
+
+    DEPTNO DNAME          LOC                                                                                                                                                                           
+---------- -------------- -------------                                                                                                                                                                 
+        30 SALES          CHICAGO                                                                                                                                                                       
+
+SQL> SPOOL OFF

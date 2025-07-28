@@ -1,0 +1,37 @@
+SQL> CONN SCOTT/SUNNY
+Connected.
+SQL> SELEST *
+SP2-0042: unknown command "SELEST *" - rest of line ignored.
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+DEPT                           TABLE                                            
+EMP                            TABLE                                            
+BONUS                          TABLE                                            
+SALGRADE                       TABLE                                            
+
+SQL> SELECT * FROM ALL_TAB;
+SELECT * FROM ALL_TAB
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT * FROM ALL TAB;
+SELECT * FROM ALL TAB
+              *
+ERROR at line 1:
+ORA-00903: invalid table name 
+
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                               
+------------------------------ ------- ----------                               
+DEPT                           TABLE                                            
+EMP                            TABLE                                            
+BONUS                          TABLE                                            
+SALGRADE                       TABLE                                            
+
+SQL> SPOOL OFF

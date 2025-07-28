@@ -1,0 +1,113 @@
+SQL> SET PAGES 200 LINES 200
+SQL> 
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO =(SELECT MGR  FROM
+  4               EMP
+  5               WHERE ENAME='SMITH');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+FORD                                                                                                                                                                                                    
+
+
+SQL>  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR FROM EMP
+  4                WHERE EMPNO=(SELECT MGR FROM EMP
+  5                          WHERE ENAME='ADAMS'))
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+JONES                                                                                                                                                                                                   
+
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO FROM EMP
+  4                WHERE EMPNO=(SELECT MGR FROM EMP
+  5                             WHERE ENAME='JONES'));
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+ACCOUNTING                                                                                                                                                                                              
+
+SQL> SELECT SAL
+  2  FROM EMP
+  3  WHERE EMPNO=(SELECT MGR
+  4                FROM EMP
+  5                 WHERE ENAME='MILLER');
+
+       SAL                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      2450                                                                                                                                                                                              
+
+SQL>  1  SELECT LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO =(SELECT DEPTNO
+  4                 FROM EMP
+  5                 WHERE EMPNO=(SELECT MGR FROM EMP
+  6                   WHERE EMPNO=(SELECT MGR FROM EMP
+  7                       WHERE ENAME='SMITH')))
+
+LOC                                                                                                                                                                                                     
+-------------                                                                                                                                                                                           
+DALLAS                                                                                                                                                                                                  
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO FROM EMP
+  4                WHERE ENAME='BLAKE');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+ALLEN                                                                                                                                                                                                   
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+TURNER                                                                                                                                                                                                  
+JAMES                                                                                                                                                                                                   
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO FROM EMP
+  4              WHERE ENAME='KING');
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           3                                                                                                                                                                                            
+
+SQL> SELECT *
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO FROM
+  4              EMP
+  5               WHERE ENAME='JONES');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7788 SCOTT      ANALYST         7566 19-APR-87       3000                    20                                                                                                                   
+      7902 FORD       ANALYST         7566 03-DEC-81       3000                    20                                                                                                                   
+
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE MGR IN (SELECT EMPNO FROM EMP
+  4                WHERE EMPNO=(SELECT MGR FROM EMP
+  5                             WHERE ENAME='FORD'));
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           2                                                                                                                                                                                            
+
+SQL>  SELECT ENAME
+  2   FROM EMP
+  3   WHERE MGR IN (SELECT EMPNO FROM EMP
+  4                WHERE EMPNO=(SELECT MGR FROM EMP
+  5                           WHERE ENAME='BLAKE'));
+
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+JONES                                                                                                                                                                                                   
+BLAKE                                                                                                                                                                                                   
+CLARK                                                                                                                                                                                                   
+
+SQL> SPOOL OFF

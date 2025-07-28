@@ -1,0 +1,517 @@
+SQL> SELECT E.NAME,M.ENAME
+  2  FROM EMP E,EMP M
+  3  WHERE E.MGR=M.EMPNO;
+SELECT E.NAME,M.ENAME
+       *
+ERROR at line 1:
+ORA-00904: "E"."NAME": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME,M.ENAME
+  2  FROM EMP E,EMP M
+  3* WHERE E.MGR=M.EMPNO
+SQL> /
+
+ENAME      ENAME                                                                
+---------- ----------                                                           
+SMITH      FORD                                                                 
+ALLEN      BLAKE                                                                
+WARD       BLAKE                                                                
+JONES      KING                                                                 
+MARTIN     BLAKE                                                                
+BLAKE      KING                                                                 
+CLARK      KING                                                                 
+SCOTT      JONES                                                                
+TURNER     BLAKE                                                                
+ADAMS      SCOTT                                                                
+JAMES      BLAKE                                                                
+
+ENAME      ENAME                                                                
+---------- ----------                                                           
+FORD       JONES                                                                
+MILLER     CLARK                                                                
+
+13 rows selected.
+
+SQL> SELECT S.ENAME,SM.ENAME
+  2  FROM EMP S,EMP SM
+  3  WHERE S.MGR=SM.EMPNO AND S.ENAME='SMITH';
+
+ENAME      ENAME                                                                
+---------- ----------                                                           
+SMITH      FORD                                                                 
+
+SQL> SELECT S.ENAME,SM.ENAME,MM.ENAME
+  2  FROM EMP S ,EMP SM,EMP MM
+  3  WHERE S.MGR=SM.EMPNO AND SM.MGR=MM.EMPNO;
+
+ENAME      ENAME      ENAME                                                     
+---------- ---------- ----------                                                
+SMITH      FORD       JONES                                                     
+ALLEN      BLAKE      KING                                                      
+WARD       BLAKE      KING                                                      
+MARTIN     BLAKE      KING                                                      
+SCOTT      JONES      KING                                                      
+TURNER     BLAKE      KING                                                      
+ADAMS      SCOTT      JONES                                                     
+JAMES      BLAKE      KING                                                      
+FORD       JONES      KING                                                      
+MILLER     CLARK      KING                                                      
+
+10 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT S.ENAME,SM.ENAME,MM.ENAME
+  2  FROM EMP S ,EMP SM,EMP MM
+  3* WHERE S.MGR=SM.EMPNO AND SM.MGR=MM.EMPNO AND S.ENAME='SCOTT'
+SQL> /
+
+ENAME      ENAME      ENAME                                                     
+---------- ---------- ----------                                                
+SCOTT      JONES      KING                                                      
+
+SQL> SELECT A.ENAME,AM.ENAME,AMD.DNAME
+  2  FROM EMP A,EMP AM,DEPT AMD
+  3  WHERE A.MGR=AM.EMPNO AND AM.DEPTNO=AMD.DEPTNO AND A.ENAME='ALLEN';
+
+ENAME      ENAME      DNAME                                                     
+---------- ---------- --------------                                            
+ALLEN      BLAKE      SALES                                                     
+
+SQL> SELECT E.ENAME
+  2  FROM EMP E ,EMP M
+  3  WHERE E.SAL<ALL M.SAL;
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+SMITH                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+
+ENAME                                                                           
+----------                                                                      
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+
+ENAME                                                                           
+----------                                                                      
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+
+ENAME                                                                           
+----------                                                                      
+WARD                                                                            
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MILLER                                                                          
+
+ENAME                                                                           
+----------                                                                      
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+
+ENAME                                                                           
+----------                                                                      
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+CLARK                                                                           
+CLARK                                                                           
+
+ENAME                                                                           
+----------                                                                      
+CLARK                                                                           
+CLARK                                                                           
+CLARK                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+JONES                                                                           
+JONES                                                                           
+JONES                                                                           
+SCOTT                                                                           
+
+ENAME                                                                           
+----------                                                                      
+FORD                                                                            
+
+89 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME
+  2  FROM EMP E ,EMP M
+  3* WHERE E.SAL < M.SAL
+SQL> /
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+SMITH                                                                           
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+SMITH                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+
+ENAME                                                                           
+----------                                                                      
+JAMES                                                                           
+JAMES                                                                           
+JAMES                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+
+ENAME                                                                           
+----------                                                                      
+ADAMS                                                                           
+ADAMS                                                                           
+ADAMS                                                                           
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+WARD                                                                            
+
+ENAME                                                                           
+----------                                                                      
+WARD                                                                            
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MARTIN                                                                          
+MILLER                                                                          
+
+ENAME                                                                           
+----------                                                                      
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+MILLER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+
+ENAME                                                                           
+----------                                                                      
+TURNER                                                                          
+TURNER                                                                          
+TURNER                                                                          
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+ALLEN                                                                           
+CLARK                                                                           
+CLARK                                                                           
+
+ENAME                                                                           
+----------                                                                      
+CLARK                                                                           
+CLARK                                                                           
+CLARK                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+BLAKE                                                                           
+JONES                                                                           
+JONES                                                                           
+JONES                                                                           
+SCOTT                                                                           
+
+ENAME                                                                           
+----------                                                                      
+FORD                                                                            
+
+89 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT E.ENAME
+  2  FROM EMP E ,EMP M
+  3* WHERE E.MGR=M.EMPNO AND  E.SAL < M.SAL
+SQL> /
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+ALLEN                                                                           
+WARD                                                                            
+JONES                                                                           
+MARTIN                                                                          
+BLAKE                                                                           
+CLARK                                                                           
+TURNER                                                                          
+ADAMS                                                                           
+JAMES                                                                           
+MILLER                                                                          
+
+11 rows selected.
+
+SQL> SELECT E.ENAME ,ED.DNAME
+  2  FROM EMP E,DEPT ED
+  3  WHERE
+  4  
+SQL>  SELECT E.ENAME ,ED.DNAME
+  2   FROM EMP E,DEPT ED, EMP M
+  3  WHERE E.MGR=M.EMPNO AND E.DEPTNO=M.DEPTNO;
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      ACCOUNTING                                                           
+ALLEN      ACCOUNTING                                                           
+WARD       ACCOUNTING                                                           
+MARTIN     ACCOUNTING                                                           
+CLARK      ACCOUNTING                                                           
+SCOTT      ACCOUNTING                                                           
+TURNER     ACCOUNTING                                                           
+ADAMS      ACCOUNTING                                                           
+JAMES      ACCOUNTING                                                           
+FORD       ACCOUNTING                                                           
+MILLER     ACCOUNTING                                                           
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      RESEARCH                                                             
+ALLEN      RESEARCH                                                             
+WARD       RESEARCH                                                             
+MARTIN     RESEARCH                                                             
+CLARK      RESEARCH                                                             
+SCOTT      RESEARCH                                                             
+TURNER     RESEARCH                                                             
+ADAMS      RESEARCH                                                             
+JAMES      RESEARCH                                                             
+FORD       RESEARCH                                                             
+MILLER     RESEARCH                                                             
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      SALES                                                                
+ALLEN      SALES                                                                
+WARD       SALES                                                                
+MARTIN     SALES                                                                
+CLARK      SALES                                                                
+SCOTT      SALES                                                                
+TURNER     SALES                                                                
+ADAMS      SALES                                                                
+JAMES      SALES                                                                
+FORD       SALES                                                                
+MILLER     SALES                                                                
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      OPERATIONS                                                           
+ALLEN      OPERATIONS                                                           
+WARD       OPERATIONS                                                           
+MARTIN     OPERATIONS                                                           
+CLARK      OPERATIONS                                                           
+SCOTT      OPERATIONS                                                           
+TURNER     OPERATIONS                                                           
+ADAMS      OPERATIONS                                                           
+JAMES      OPERATIONS                                                           
+FORD       OPERATIONS                                                           
+MILLER     OPERATIONS                                                           
+
+44 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E.ENAME ,ED.DNAME
+  2   FROM EMP E,DEPT ED, EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND M.DEPTNO=ED.DEPTNO AND M.DNAME=E.DNAME
+SQL> /
+WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND M.DEPTNO=ED.DEPTNO AND M.DNAME=E.DNAME
+                                                                              *
+ERROR at line 3:
+ORA-00904: "E"."DNAME": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E.ENAME ,ED.DNAME
+  2   FROM EMP E,DEPT ED, EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND M.DEPTNO=ED.DEPTNO AND M.DNAME=E.DNAME
+SQL> /
+WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND M.DEPTNO=ED.DEPTNO AND M.DNAME=E.DNAME
+                                                                              *
+ERROR at line 3:
+ORA-00904: "E"."DNAME": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1   SELECT E.ENAME ,ED.DNAME
+  2   FROM EMP E,DEPT ED, EMP M
+  3* WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND E.DEPTNO=M.DEPTNO
+SQL> /
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      RESEARCH                                                             
+ALLEN      SALES                                                                
+WARD       SALES                                                                
+MARTIN     SALES                                                                
+CLARK      ACCOUNTING                                                           
+SCOTT      RESEARCH                                                             
+TURNER     SALES                                                                
+ADAMS      RESEARCH                                                             
+JAMES      SALES                                                                
+FORD       RESEARCH                                                             
+MILLER     ACCOUNTING                                                           
+
+11 rows selected.
+
+SQL> SELECT E.ENAME
+  2  FROM EMP E ,EMP M
+  3  WHERE E.MGR=M.EMPNO AND  E.SAL < M.SAL;
+
+ENAME                                                                           
+----------                                                                      
+SMITH                                                                           
+ALLEN                                                                           
+WARD                                                                            
+JONES                                                                           
+MARTIN                                                                          
+BLAKE                                                                           
+CLARK                                                                           
+TURNER                                                                          
+ADAMS                                                                           
+JAMES                                                                           
+MILLER                                                                          
+
+11 rows selected.
+
+SQL>   SELECT E.ENAME ,ED.DNAME
+  2    FROM EMP E,DEPT ED, EMP M
+  3   WHERE E.MGR=M.EMPNO AND E.DEPTNO=ED.DEPTNO AND E.DEPTNO=M.DEPTNO;
+
+ENAME      DNAME                                                                
+---------- --------------                                                       
+SMITH      RESEARCH                                                             
+ALLEN      SALES                                                                
+WARD       SALES                                                                
+MARTIN     SALES                                                                
+CLARK      ACCOUNTING                                                           
+SCOTT      RESEARCH                                                             
+TURNER     SALES                                                                
+ADAMS      RESEARCH                                                             
+JAMES      SALES                                                                
+FORD       RESEARCH                                                             
+MILLER     ACCOUNTING                                                           
+
+11 rows selected.
+
+SQL> SELECT E.ENAME ,M.ENAME
+  2  FROM EMP E , EMP M
+  3  
+SQL> SPOOL OFF

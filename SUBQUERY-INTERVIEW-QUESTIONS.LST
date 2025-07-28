@@ -1,0 +1,52 @@
+SQL> 
+SQL> SELECT
+  2   SELECT DNAME
+  3   FROM DEPT
+  4   WHERE DEPTNO IN (SELECT DEPTNO
+  5                      FROM EMP
+  6  
+SQL> 
+SQL>  SELECT DNAME
+  2   FROM DEPT
+  3   WHERE DEPTNO IN (SELECT DEPTNO
+  4                      FROM EMP
+  5                    WHERE DEPTNO IS NULL);
+
+no rows selected                                                                                                                                                                                                
+
+ SQL> 1  SELECT ENAME,JOB
+  2  FROM EMP
+  3  WHERE JOB =(SELECT JOB FROM EMP
+  4            WHERE ENAME ='SCOTT')
+
+ENAME      JOB                                                                                                                                                                                          
+---------- ---------                                                                                                                                                                                    
+SCOTT      ANALYST                                                                                                                                                                                      
+FORD       ANALYST                                                                                                                                                                                      
+
+SQL> SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  4                  WHERE ENAME =(SELECT ENAME FROM EMP
+  5                               WHERE EMPNO=(SELECT MGR FROM EMP
+  6                                           WHERE EMPNO =(SELECT MGR FROM EMP
+  7                                            WHERE ENAME='SCOTT'))));
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+ACCOUNTING                                                                                                                                                                                              
+                                                                                                                                                                                        
+
+ SQL> 1  SELECT DNAME
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  4                               WHERE EMPNO=(SELECT MGR FROM EMP
+  5                                           WHERE EMPNO =(SELECT MGR FROM EMP
+  6                                            WHERE ENAME='SCOTT')))
+
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+ACCOUNTING                                                                                                                                                                                              
+
+SQL> SPOOL OFF

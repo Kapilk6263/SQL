@@ -1,0 +1,144 @@
+SQL> SELECT MAX(SAL)
+  2  FROM EMP ;
+
+  MAX(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      5000                                                                                                                                                                                              
+
+SQL> SELECT MIN(SAL) FROM EMP ;
+
+  MIN(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+       800                                                                                                                                                                                              
+
+SQL> SELECT AVG(SAL) FROM EMP ;
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+2073.21429                                                                                                                                                                                              
+
+SQL> SELECT SUM(SAL) FROM EMP ;
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+     29025                                                                                                                                                                                              
+
+SQL> SELECT COUNT(SAL) FROM EMP;
+
+COUNT(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN ('SALESMAN') AND DEPTNO  IN (20,30);
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      5600                                                                                                                                                                                              
+
+SQL> SELECT AVG(SAL) FROM EMP WHERE JOB=;SALESMAN;
+SELECT AVG(SAL) FROM EMP WHERE JOB=;SALESMAN
+                                   *
+ERROR at line 1:
+ORA-00911: invalid character 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT AVG(SAL) FROM EMP WHERE JOB=;SALESMAN
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT AVG(SAL) FROM EMP WHERE JOB IN ('SALESMAN') AND DEPTNO IN (20,30) 
+SQL> /
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      1400                                                                                                                                                                                              
+
+SQL> SELECT USER
+  2  FROM SCOTT;
+FROM SCOTT
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT USER
+  2* FROM USERS
+SQL> /
+FROM USERS
+     *
+ERROR at line 2:
+ORA-00942: table or view does not exist 
+
+
+SQL> SELECT * FROM TAB;
+
+TNAME                          TABTYPE  CLUSTERID                                                                                                                                                       
+------------------------------ ------- ----------                                                                                                                                                       
+DEPT                           TABLE                                                                                                                                                                    
+EMP                            TABLE                                                                                                                                                                    
+BONUS                          TABLE                                                                                                                                                                    
+SALGRADE                       TABLE                                                                                                                                                                    
+
+SQL> SELECT AVG(SAL)
+  2  FROM EMP
+  3  WHERE JOB IN 'SALESMAN' AND (DEPTNO IN (20,30));
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      1400                                                                                                                                                                                              
+
+SQL> SELECT SUM(SAL) FROM EMP WHERE JOB IN ('ANALYST') AND ( HIREDATE '01-JAN-81' AND '31-DEC-81' ) ;
+SELECT SUM(SAL) FROM EMP WHERE JOB IN ('ANALYST') AND ( HIREDATE '01-JAN-81' AND '31-DEC-81' ) 
+                                                                 *
+ERROR at line 1:
+ORA-00920: invalid relational operator 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT SUM(SAL) FROM EMP WHERE JOB IN ('ANALYST') AND ( HIREDATE BETWEEN  '01-JAN-81' AND '31-DEC-81' ) 
+SQL> /
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> SELECT SUM(SAL) FROM EMP WHERE JOB='ANALYST' AND HIREDATE LIKE '%81';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> SELECT COUNT(ENAME) FROM EMP WHERE COMM IS NOT NULL;
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           4                                                                                                                                                                                            
+
+SQL> SELECT COUNT (ENAME) FROM EMP WHERE SAL<2000 AND DEOTNO=20;
+SELECT COUNT (ENAME) FROM EMP WHERE SAL<2000 AND DEOTNO=20
+                                                 *
+ERROR at line 1:
+ORA-00904: "DEOTNO": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT COUNT (ENAME) FROM EMP WHERE SAL<2000 AND DEPTNO=20
+SQL> /
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           2                                                                                                                                                                                            
+
+SQL> SPOOL OFF

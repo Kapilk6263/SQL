@@ -1,0 +1,525 @@
+SQL> 
+SQL> INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUES (104,'POOJA DALAL',21,MANUAL TESTING);
+VALUES (104,'POOJA DALAL',21,MANUAL TESTING)
+                                    *
+ERROR at line 2:
+ORA-00917: missing comma 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2* VALUES (104,'POOJA DALAL',21,'MANUAL TESTING')
+SQL> /
+
+1 row created.
+
+SQL> INSERT INTO STUDENT STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUE (105,'CHETNA SHARMA',20,','MANUAL TESTING');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  INSERT INTO STUDENT STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2* VALUE (105,'CHETNA SHARMA',20,'MANUAL TESTING')
+SQL> /
+VALUE (105,'CHETNA SHARMA',20,'MANUAL TESTING')
+*
+ERROR at line 2:
+ORA-00926: missing VALUES keyword 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  INSERT INTO STUDENT STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2* VALUES (105,'CHETNA SHARMA',20,'MANUAL TESTING')
+SQL> /
+
+1 row created.
+
+SQL> INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUES (106,'HAPPY SINGH',23,'PHYTHON');
+
+1 row created.
+
+SQL> INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUES (107,'YOGITA BHAGTANI',22,'JAVA FULL STACK');
+
+1 row created.
+
+SQL> INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUES (108,'SHAILAJA TIWARI',20,'JAVA FULL STACK');
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID NAME                                                      AGE COURSE                                                                                                                         
+---------- -------------------------------------------------- ---------- ------------------------------                                                                                                 
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 TESTING                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON                                                                                                                        
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       106 HAPPY SINGH                                                23 PHYTHON                                                                                                                        
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+
+8 rows selected.
+
+SQL> SELECT NAME
+  2  FROM EMP
+  3  WHERE AGE>21;
+WHERE AGE>21
+      *
+ERROR at line 3:
+ORA-00904: "AGE": invalid identifier 
+
+
+SQL> SELECT NAME
+  2  FROM STUDENT
+  3  WHERE AGE>21;
+
+NAME                                                                                                                                                                                                    
+--------------------------------------------------                                                                                                                                                      
+UMANG                                                                                                                                                                                                   
+SUARABH                                                                                                                                                                                                 
+HAPPY SINGH                                                                                                                                                                                             
+YOGITA BHAGTANI                                                                                                                                                                                         
+
+SQL> SELECT NAME,AGE
+  2  FROM STUDENT
+  3  WHERE AGE=21;
+
+NAME                                                      AGE                                                                                                                                           
+-------------------------------------------------- ----------                                                                                                                                           
+KAPIL UPLAWDIYA                                            21                                                                                                                                           
+POOJA DALAL                                                21                                                                                                                                           
+
+SQL> SELECT NAME
+  2  FROM STUDENT
+  3  WHERE NAME LIKE 'K%';
+
+NAME                                                                                                                                                                                                    
+--------------------------------------------------                                                                                                                                                      
+KAPIL UPLAWDIYA                                                                                                                                                                                         
+
+SQL> SELECT COUNT(NAME)
+  2  FROM STUDENT
+  3  GROUP BY AGE
+  4  HAVING AGE=21;
+
+COUNT(NAME)                                                                                                                                                                                             
+-----------                                                                                                                                                                                             
+          2                                                                                                                                                                                             
+
+SQL> UPDATE STUDENT
+  2  SET COURSE='MANAUAL TESTING'
+  3  WHERE STUDENT_ID=102;
+
+1 row updated.
+
+SQL> SELECT NAME
+  2  FROM STUDENT
+  3  WHERE STUDENT_ID=102;
+
+NAME                                                                                                                                                                                                    
+--------------------------------------------------                                                                                                                                                      
+UMANG                                                                                                                                                                                                   
+
+SQL> SELECT COURSE
+  2  FROM STUDENT
+  3  WHERE STUDENT_ID=102;
+
+COURSE                                                                                                                                                                                                  
+------------------------------                                                                                                                                                                          
+MANAUAL TESTING                                                                                                                                                                                         
+
+SQL> DELETE FROM STUDENT
+  2  WHERE STUDENT_ID=106;
+
+1 row deleted.
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID NAME                                                      AGE COURSE                                                                                                                         
+---------- -------------------------------------------------- ---------- ------------------------------                                                                                                 
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                
+       103 SUARABH                                                    22 PHYTHON                                                                                                                        
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+
+7 rows selected.
+
+SQL> INSERT INTO STUDENT (STUDENT_ID,NAME,AGE,COURSE)
+  2  VALUES (106,'HAPPY SINGH',23,'PHYTHON');
+
+1 row created.
+
+SQL> SELECT * FROM STUDENT ;
+
+STUDENT_ID NAME                                                      AGE COURSE                                                                                                                         
+---------- -------------------------------------------------- ---------- ------------------------------                                                                                                 
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                
+       103 SUARABH                                                    22 PHYTHON                                                                                                                        
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+       106 HAPPY SINGH                                                23 PHYTHON                                                                                                                        
+
+8 rows selected.
+
+SQL> UPDATE STUDENT
+  2  SET COURSE='PHYTHON DEVELOPER'
+  3  WHERE NAME='SAURABH';
+
+0 rows updated.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENT
+  2  SET COURSE='PHYTHON DEVELOPER'
+  3* WHERE NAME='SUARABH'
+SQL> /
+
+1 row updated.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENT
+  2  SET COURSE='PHYTHON DEVELOPER'
+  3* WHERE NAME='SUARABH'
+SQL> 
+SQL> UPDATE STUDENT
+  2  SET COURSE='PHYTHON DEVELOPER'
+  3  WHERE STUDENT_ID=106;
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENT;
+
+STUDENT_ID NAME                                                      AGE COURSE                                                                                                                         
+---------- -------------------------------------------------- ---------- ------------------------------                                                                                                 
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                              
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                              
+
+8 rows selected.
+
+SQL> RENAME STUDENT TO STUDENTS
+  2  ;
+
+Table renamed.
+
+SQL> ALTER TABLE STUDENTS
+  2  ADD GENDER CHAR(1) NOT NULL;
+ALTER TABLE STUDENTS
+            *
+ERROR at line 1:
+ORA-01758: table must be empty to add mandatory (NOT NULL) column 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE STUDENTS
+  2* ADD GENDER CHAR(1) 
+SQL> /
+
+Table altered.
+
+SQL> SELECT * FROM STUDENT S
+  2  
+SQL> SELECT * FROM STUDENTS ;
+
+STUDENT_ID NAME                                                      AGE COURSE                         G                                                                                               
+---------- -------------------------------------------------- ---------- ------------------------------ -                                                                                               
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                              
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                 
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                 
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                              
+
+8 rows selected.
+
+SQL> SET PAGES 400 LINES 400
+SQL> SELECT * FROM STUDENT ;
+SELECT * FROM STUDENT 
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT * FROM STUDENTS
+SQL> /
+
+STUDENT_ID NAME                                                      AGE COURSE                         G                                                                                                                                                                                                                                                                                                       
+---------- -------------------------------------------------- ---------- ------------------------------ -                                                                                                                                                                                                                                                                                                       
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+
+8 rows selected.
+
+SQL> ALTER TABLE
+  2  STUDENTS
+  3  RENAME
+  4  GENDE
+  5  
+SQL> ALTER TABLE STUDENTS
+  2  RENAME COLUMN GENDER TO GENDERR;
+
+Table altered.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         G                                                                                                                                                                                                                                                                                                       
+---------- -------------------------------------------------- ---------- ------------------------------ -                                                                                                                                                                                                                                                                                                       
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+
+8 rows selected.
+
+SQL> ALTER TABLE STUDENTS
+  2  DROP COLUMN GENDERR;
+
+Table altered.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                                                                                                                                                                                                                                                                                                                                 
+---------- -------------------------------------------------- ---------- ------------------------------                                                                                                                                                                                                                                                                                                         
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+
+8 rows selected.
+
+SQL> ALTER TABLE STUDENTS
+  2  ADD COURSE_FEES NUMBER(10) ;
+
+Table altered.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                                                                                                                                                                                                                             
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                                                                                                                                                                                                                             
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                                                                                                                                                                                                                                                                                                                        
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+
+8 rows selected.
+
+SQL> UPDATE SUTUDENTS
+  2  SET COURSE_FEES=23000;
+UPDATE SUTUDENTS
+       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE SUTUDENTS
+  2  SET COURSE_FEES=23000
+  3* WHERE COURSE='JAVA FULL STACK'
+SQL> /
+UPDATE SUTUDENTS
+       *
+ERROR at line 1:
+ORA-00942: table or view does not exist 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENTS
+  2  SET COURSE_FEES=23000
+  3* WHERE COURSE='JAVA FULL STACK'
+SQL> /
+
+3 rows updated.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                                                                                                                                                                                                                             
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                                                                                                                                                                                                                             
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+       104 POOJA DALAL                                                21 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                                      
+
+8 rows selected.
+
+SQL> ALTER STUDENTS
+  2  SET COURSE_FEES=21000
+  3  WHERE COURSE='MANUAL TESTING';
+ALTER STUDENTS
+      *
+ERROR at line 1:
+ORA-00940: invalid ALTER command 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  UPDATE STUDENTS
+  2  SET COURSE_FEES=21000
+  3* WHERE COURSE='MANUAL TESTING'
+SQL> /
+
+2 rows updated.
+
+SQL> UPDATE STUDENTS
+  2  SET COURSE_FEES=22000
+  3  WHERE COURSE='PHYTHON DEVELOPER';
+
+2 rows updated.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                                                                                                                                                                                                                             
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                                                                                                                                                                                                                             
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       102 UMANG                                                      23 MANAUAL TESTING                                                                                                                                                                                                                                                                                                                        
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+       104 POOJA DALAL                                                21 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+
+8 rows selected.
+
+SQL> UPDATE STUDENTS
+  2  SET COURSE='MANUAL TESTING'
+  3  WHERE NAME='UMANG';
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                                                                                                                                                                                                                             
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                                                                                                                                                                                                                             
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       102 UMANG                                                      23 MANUAL TESTING                                                                                                                                                                                                                                                                                                                         
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+       104 POOJA DALAL                                                21 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+
+8 rows selected.
+
+SQL> UPDATE STUDENTS
+  2  SET COURSE_FEES=21000
+  3  WHERE NAME='UMANG';
+
+1 row updated.
+
+SQL> SELECT * FROM STUDENTS;
+
+STUDENT_ID NAME                                                      AGE COURSE                         COURSE_FEES                                                                                                                                                                                                                                                                                             
+---------- -------------------------------------------------- ---------- ------------------------------ -----------                                                                                                                                                                                                                                                                                             
+       101 KAPIL UPLAWDIYA                                            21 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       102 UMANG                                                      23 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       103 SUARABH                                                    22 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+       104 POOJA DALAL                                                21 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       105 CHETNA SHARMA                                              20 MANUAL TESTING                       21000                                                                                                                                                                                                                                                                                             
+       107 YOGITA BHAGTANI                                            22 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       108 SHAILAJA TIWARI                                            20 JAVA FULL STACK                      23000                                                                                                                                                                                                                                                                                             
+       106 HAPPY SINGH                                                23 PHYTHON DEVELOPER                    22000                                                                                                                                                                                                                                                                                             
+
+8 rows selected.
+
+SQL> SELECT SUM(COURSE_FEES)
+  2  FROM STUDENTS ;
+
+SUM(COURSE_FEES)                                                                                                                                                                                                                                                                                                                                                                                                
+----------------                                                                                                                                                                                                                                                                                                                                                                                                
+          176000                                                                                                                                                                                                                                                                                                                                                                                                
+
+SQL> SELECT COUNT(COURSE_FEES),SUM(COURSE_FEES),NAME,COURSE
+  2  FROM STUDENTS
+  3  GROUP BY COURSE ;
+SELECT COUNT(COURSE_FEES),SUM(COURSE_FEES),NAME,COURSE
+                                           *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression 
+
+
+SQL> EDD
+SP2-0042: unknown command "EDD" - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(COURSE_FEES),SUM(COURSE_FEES),NAME,COURSE
+  2  FROM STUDENTS
+  3* GROUP BY COURSE,NAME
+SQL> /
+
+COUNT(COURSE_FEES) SUM(COURSE_FEES) NAME                                               COURSE                                                                                                                                                                                                                                                                                                                   
+------------------ ---------------- -------------------------------------------------- ------------------------------                                                                                                                                                                                                                                                                                           
+                 1            22000 HAPPY SINGH                                        PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                        
+                 1            21000 UMANG                                              MANUAL TESTING                                                                                                                                                                                                                                                                                                           
+                 1            21000 CHETNA SHARMA                                      MANUAL TESTING                                                                                                                                                                                                                                                                                                           
+                 1            23000 KAPIL UPLAWDIYA                                    JAVA FULL STACK                                                                                                                                                                                                                                                                                                          
+                 1            23000 YOGITA BHAGTANI                                    JAVA FULL STACK                                                                                                                                                                                                                                                                                                          
+                 1            23000 SHAILAJA TIWARI                                    JAVA FULL STACK                                                                                                                                                                                                                                                                                                          
+                 1            22000 SUARABH                                            PHYTHON DEVELOPER                                                                                                                                                                                                                                                                                                        
+                 1            21000 POOJA DALAL                                        MANUAL TESTING                                                                                                                                                                                                                                                                                                           
+
+8 rows selected.
+
+SQL> SPOOL OFF

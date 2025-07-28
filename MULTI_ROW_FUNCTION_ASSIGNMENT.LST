@@ -1,0 +1,135 @@
+SQL> CL SCR
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE SAL<2000 AND DEPTNO=10;
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           1                                                                                                                                                                                            
+
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE JOB='CLERK';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      4150                                                                                                                                                                                              
+
+SQL> SELECT AVG(SAL)
+  2  FROM EMP;
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+2073.21429                                                                                                                                                                                              
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE ENAME LIKE 'A%';
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           2                                                                                                                                                                                            
+
+SQL> SELECT COUNT(ENAME) FROM EMP WHERE JOB IN ('CLERK','MANAGER');
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           7                                                                                                                                                                                            
+
+SQL> SELECT SUM(SAL)
+  2  
+SQL> SELECT SUM(SAL)
+  2  FROM EMP
+  3  WHERE HIREDATE LIKE '%FEB%';
+
+  SUM(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      2850                                                                                                                                                                                              
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE MGR=7839;
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           3                                                                                                                                                                                            
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE COMM IS NOT NULL AND DEPTNO=30;
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           4                                                                                                                                                                                            
+
+SQL> SELECT AVG(SAL),SUM(SAL),COUNT(ENAME),MAX(SAL)
+  2  FROM EMP
+  3  WHERE JOB='PRESIDENT';
+
+  AVG(SAL)   SUM(SAL) COUNT(ENAME)   MAX(SAL)                                                                                                                                                           
+---------- ---------- ------------ ----------                                                                                                                                                           
+      5000       5000            1       5000                                                                                                                                                           
+
+SQL> SELECT COUNT(SAL)
+  2  FROM EMP
+  3  
+SQL> SELECT COUNT( DISTINCT SAL)
+  2  FROM EMP;
+
+COUNT(DISTINCTSAL)                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+                12                                                                                                                                                                                      
+
+SQL> SELECT COUNT(JOB)
+  2  FROM EMP;
+
+COUNT(JOB)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> SELECT COUNT(DISTINCT JOB)
+  2  FROM EMP;
+
+COUNT(DISTINCTJOB)                                                                                                                                                                                      
+------------------                                                                                                                                                                                      
+                 5                                                                                                                                                                                      
+
+SQL>  SELECT COUNT(ENAME) FROM EMP WHERE ENAME LIKE '%S%';
+
+COUNT(ENAME)                                                                                                                                                                                            
+------------                                                                                                                                                                                            
+           5                                                                                                                                                                                            
+
+SQL> SELECT MAX(SAL) FROM EMP WHERE JOB='ANALYST';
+
+  MAX(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> DISTICT COUTN(SAL) FROM EMP ;
+SP2-0734: unknown command beginning "DISTICT CO..." - rest of line ignored.
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT MAX(SAL) FROM EMP WHERE JOB='ANALYST'
+SQL> 
+SQL> 
+SQL> SELECT COUNT(JOB) FROM EMP'
+  2  
+SQL> SELECT COUNT(JOB) FROM EMP;
+
+COUNT(JOB)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+        14                                                                                                                                                                                              
+
+SQL> SELECT AVG(SAL) FROM EMP WHERE JOB='CLERK';
+
+  AVG(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+    1037.5                                                                                                                                                                                              
+
+
+
+
+SQL> SPOOL OFF
+

@@ -1,0 +1,169 @@
+SQL> 
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='SCOTT' ) AND LOC='DALLAS' AND DNAME='RESEARCH';
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+RESEARCH       DALLAS                                                                                                                                                                                   
+
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='KING' ) AND (DEPTNO =(SELECT DEPTNO FROM DEPT WHERE DNAME='ACCOUNTING');
+SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='KING' ) AND (DEPTNO =(SELECT DEPTNO FROM DEPT WHERE DNAME='ACCOUNTING')
+                                                                                          *
+ERROR at line 1:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='KING' ) AND (DEPTNO =(SELECT DEPTNO FROM DEPT WHERE DNAME='ACCOUNTING'))
+SQL> /
+
+no rows selected
+
+SQL> SELECT DNAME,LOC FROM DEPT WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND DEPTNO =
+  2  
+SQL> SELECT DNAME,LOC FROM DEPT WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL<'KING');
+SELECT DNAME,LOC FROM DEPT WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+                                                                                                                                      *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+SQL> /
+SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+                                                                                                                                   *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM DEPT WHERE BETWEEN DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND   DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+SQL> /
+SELECT DNAME,LOC FROM DEPT WHERE BETWEEN DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND   DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+                                 *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM DEPT WHERE SAL BETWEEN DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND  DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+SQL> /
+SELECT DNAME,LOC FROM DEPT WHERE SAL BETWEEN DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH') AND  DEPTNO =(SELECT DEPTNO FROM EMP WHERE SAL<'KING')
+                                                    *
+ERROR at line 1:
+ORA-00905: missing keyword 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL BETWEEN 'SMITH' AND 'KING')
+SQL> /
+SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL BETWEEN 'SMITH' AND 'KING')
+                                                                                    *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH' AND SAL<'KING')
+SQL> /
+SELECT DNAME,LOC FROM DEPT WHERE DEPTNO = (SELECT DEPTNO FROM EMP WHERE SAL>'SMITH' AND SAL<'KING')
+                                                                            *
+ERROR at line 1:
+ORA-01722: invalid number 
+
+
+SQL> 
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  4  WHERE ENAME='SMITH' AND ENAME='ALLEN
+  5  ');
+
+no rows selected
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  4  WHERE ENAME IN ('SMITH','ALLEN')
+  5* )
+SQL> /
+
+DNAME          LOC                                                                                                                                                                                      
+-------------- -------------                                                                                                                                                                            
+RESEARCH       DALLAS                                                                                                                                                                                   
+SALES          CHICAGO                                                                                                                                                                                  
+
+SQL> SELECT DNAME,LOC
+  2  FROM DEPT
+  3  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL>(JOB='MANAGER'));
+WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL>(JOB='MANAGER'))
+                                                      *
+ERROR at line 3:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM DEPT
+  3* WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL >(SELECT SAL FROM EMP WHERE JOB='MANAGER'));
+SQL> /
+WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL >(SELECT SAL FROM EMP WHERE JOB='MANAGER'));
+                                                                                             *
+ERROR at line 3:
+ORA-00911: invalid character 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME,LOC
+  2  FROM DEPT
+  3* WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL >(SELECT SAL FROM EMP WHERE JOB='MANAGER'))
+SQL> /
+WHERE DEPTNO IN (SELECT DEPTNO FROM EMP WHERE SAL >(SELECT SAL FROM EMP WHERE JOB='MANAGER'))
+                                                    *
+ERROR at line 3:
+ORA-01427: single-row subquery returns more than one row 
+
+
+SQL> SELECT ENAME,SAL FROM EMP
+  2  WHERE SAL>(SELECT ED
+  3  
+SQL> SELECT ENAME FROM EMP
+  2  WHERE SAL >ALL (SELECT SAL
+  3  FROM EMP WHERE DEPTNO=20);
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+KING                                                                                                                                                                                                    
+
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL >ANY (SELECT SAL FROM EMP WHERE JOB='MANAGER');
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+KING             5000                                                                                                                                                                                   
+FORD             3000                                                                                                                                                                                   
+SCOTT            3000                                                                                                                                                                                   
+JONES            2975                                                                                                                                                                                   
+BLAKE            2850                                                                                                                                                                                   
+
+SQL> SPOOL OFF

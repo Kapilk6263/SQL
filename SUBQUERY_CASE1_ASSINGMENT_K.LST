@@ -1,0 +1,293 @@
+SQL> SET PAGES 200 LINES 200
+SQL> 
+SQL> SELECT ENAME FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='ADAMS');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+ALLEN                                                                                                                                                                                                   
+WARD                                                                                                                                                                                                    
+JONES                                                                                                                                                                                                   
+MARTIN                                                                                                                                                                                                  
+BLAKE                                                                                                                                                                                                   
+CLARK                                                                                                                                                                                                   
+SCOTT                                                                                                                                                                                                   
+KING                                                                                                                                                                                                    
+TURNER                                                                                                                                                                                                  
+FORD                                                                                                                                                                                                    
+MILLER                                                                                                                                                                                                  
+
+11 rows selected.
+
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL<(SELECT SAL FROM EMP WHERE ENAME='KING');
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SMITH             800                                                                                                                                                                                   
+ALLEN            1600                                                                                                                                                                                   
+WARD             1250                                                                                                                                                                                   
+JONES            2975                                                                                                                                                                                   
+MARTIN           1250                                                                                                                                                                                   
+BLAKE            2850                                                                                                                                                                                   
+CLARK            2450                                                                                                                                                                                   
+SCOTT            3000                                                                                                                                                                                   
+TURNER           1500                                                                                                                                                                                   
+ADAMS            1100                                                                                                                                                                                   
+JAMES             950                                                                                                                                                                                   
+FORD             3000                                                                                                                                                                                   
+MILLER           1300                                                                                                                                                                                   
+
+13 rows selected.
+
+SQL> SELECT ENAME,DEPTNO FROM EMP WHERE DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='JONES');
+
+ENAME          DEPTNO                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SMITH              20                                                                                                                                                                                   
+JONES              20                                                                                                                                                                                   
+SCOTT              20                                                                                                                                                                                   
+ADAMS              20                                                                                                                                                                                   
+FORD               20                                                                                                                                                                                   
+
+SQL> SELECT ENAME,JOB FROM EMP WHERE JOB=(SELECT JOB FROM EMP WHERE ENAME='JAMES');
+
+ENAME      JOB                                                                                                                                                                                          
+---------- ---------                                                                                                                                                                                    
+SMITH      CLERK                                                                                                                                                                                        
+ADAMS      CLERK                                                                                                                                                                                        
+JAMES      CLERK                                                                                                                                                                                        
+MILLER     CLERK                                                                                                                                                                                        
+
+SQL> SELECT EMPNO,ENAME,SAL*12
+  2  FROM EMP
+  3  WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='WARDS');
+
+no rows selected
+
+SQL> SELECT ENAME AND HIREDATE FROM EMP WHERE HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='SCOTT');
+SELECT ENAME AND HIREDATE FROM EMP WHERE HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='SCOTT')
+             *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME, HIREDATE FROM EMP WHERE HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='SCOTT')
+SQL> /
+
+ENAME      HIREDATE                                                                                                                                                                                     
+---------- ---------                                                                                                                                                                                    
+SMITH      17-DEC-80                                                                                                                                                                                    
+ALLEN      20-FEB-81                                                                                                                                                                                    
+WARD       22-FEB-81                                                                                                                                                                                    
+JONES      02-APR-81                                                                                                                                                                                    
+MARTIN     28-SEP-81                                                                                                                                                                                    
+BLAKE      01-MAY-81                                                                                                                                                                                    
+CLARK      09-JUN-81                                                                                                                                                                                    
+KING       17-NOV-81                                                                                                                                                                                    
+TURNER     08-SEP-81                                                                                                                                                                                    
+JAMES      03-DEC-81                                                                                                                                                                                    
+FORD       03-DEC-81                                                                                                                                                                                    
+MILLER     23-JAN-82                                                                                                                                                                                    
+
+12 rows selected.
+
+SQL> SELECT ENAME,HIREDATE FROM EMP WHERE HIREDATE >(SELECT HIREDATE FROM EMP WHERE ENAME='PRESIDENT');
+
+no rows selected
+
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL<(SELECT DEPTNO FROM EMP WHERE EMPNO=7839);
+
+no rows selected
+
+SQL> SELECT ED
+  2  ED
+  3  SELECT ENAME ,SAL FROM EMP WHERE SAL<(SELECT SAL FROM EMP WHERE EMPNO=7839);
+SELECT ENAME ,SAL FROM EMP WHERE SAL<(SELECT SAL FROM EMP WHERE EMPNO=7839)
+*
+ERROR at line 3:
+ORA-00923: FROM keyword not found where expected 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME ,SAL FROM EMP WHERE SAL<(SELECT SAL FROM EMP WHERE EMPNO=7839)
+SQL> /
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+SMITH             800                                                                                                                                                                                   
+ALLEN            1600                                                                                                                                                                                   
+WARD             1250                                                                                                                                                                                   
+JONES            2975                                                                                                                                                                                   
+MARTIN           1250                                                                                                                                                                                   
+BLAKE            2850                                                                                                                                                                                   
+CLARK            2450                                                                                                                                                                                   
+SCOTT            3000                                                                                                                                                                                   
+TURNER           1500                                                                                                                                                                                   
+ADAMS            1100                                                                                                                                                                                   
+JAMES             950                                                                                                                                                                                   
+FORD             3000                                                                                                                                                                                   
+MILLER           1300                                                                                                                                                                                   
+
+13 rows selected.
+
+SQL> SELECT * FROM EMP WHERE HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='ALLEN');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='MILLER' ) AND SAL<(SEECT
+  2  
+SQL> 
+SQL> SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='MILLER' )
+  2  AND SAL<(SELECT SAL FROM EMP WHERE ENMAE='ALLEN');
+AND SAL<(SELECT SAL FROM EMP WHERE ENMAE='ALLEN')
+                                   *
+ERROR at line 2:
+ORA-00904: "ENMAE": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME,SAL FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='MILLER' )
+  2* AND SAL<(SELECT SAL FROM EMP WHERE ENAME='ALLEN')
+SQL> /
+
+ENAME             SAL                                                                                                                                                                                   
+---------- ----------                                                                                                                                                                                   
+TURNER           1500                                                                                                                                                                                   
+
+SQL> SELECT * FROM EMP WHERE DEPTNO=20 AND JOB=(SELECT JOB FROM EMP WHERE ENAME='SMITH');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7369 SMITH      CLERK           7902 17-DEC-80        800                    20                                                                                                                   
+      7876 ADAMS      CLERK           7788 23-MAY-87       1100                    20                                                                                                                   
+
+SQL> SELECT * FROM EMP WHERE JOB='MANAGER' AND DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='TURNER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7698 BLAKE      MANAGER         7839 01-MAY-81       2850                    30                                                                                                                   
+
+SQL> SELECT ENMAE,HIREDTAE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EP
+  2  
+SQL> SELECT ENMAE,HIREDTAE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='KING');
+SELECT ENMAE,HIREDTAE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='KING')
+             *
+ERROR at line 1:
+ORA-00904: "HIREDTAE": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,HIREDTAE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='KING')
+SQL> /
+SELECT ENAME,HIREDTAE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='KING')
+             *
+ERROR at line 1:
+ORA-00904: "HIREDTAE": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,HIREDATE FROM EMP WHERE HIREDATE>'31-DEC-80' AND HIREDATE<(SELECT HIREDATE FROM EMP WHERE ENAME='KING')
+SQL> /
+
+ENAME      HIREDATE                                                                                                                                                                                     
+---------- ---------                                                                                                                                                                                    
+ALLEN      20-FEB-81                                                                                                                                                                                    
+WARD       22-FEB-81                                                                                                                                                                                    
+JONES      02-APR-81                                                                                                                                                                                    
+MARTIN     28-SEP-81                                                                                                                                                                                    
+BLAKE      01-MAY-81                                                                                                                                                                                    
+CLARK      09-JUN-81                                                                                                                                                                                    
+TURNER     08-SEP-81                                                                                                                                                                                    
+
+7 rows selected.
+
+SQL> SELECT ENAME,SAL,SAL*12
+  2  FROM EMP WHERE SAL<(SELECT SAL FROM EMP WHERE ENAME='BLAKE') AND SAL>3500;
+
+no rows selected
+
+SQL> SELECT * FROM EMP WHERE SAL>(SELECT SAL FROM EMP WHERE ENAME='SCOTT') AND SAL<(SELECT SAL FROM EMP WHERE ENAME='KING');
+
+no rows selected
+
+SQL> SELECT ENAME FROM EMP WHERE ENAME LIKE 'A%' AND DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='BLAKE');
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+ALLEN                                                                                                                                                                                                   
+
+SQL> SELECT ENAME,COMM FROM EMP WHERE IS NOT NULL AND JOB=(SELECT JOB FROM EMP WHERE ENAME='SMITH');
+SELECT ENAME,COMM FROM EMP WHERE IS NOT NULL AND JOB=(SELECT JOB FROM EMP WHERE ENAME='SMITH')
+                                 *
+ERROR at line 1:
+ORA-00936: missing expression 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,COMM FROM EMP WHERE COMM IS NOT NULL AND JOB=(SELECT JOB FROM EMP WHERE ENAME='SMITH')
+SQL> /
+
+no rows selected
+
+SQL> SELECT * FROM EMP WHERE JOB='CLERK' AND DEPTNO=(SELECT DEPTNO FROM EMP WHERE ENAME='TURNER');
+
+     EMPNO ENAME      JOB              MGR HIREDATE         SAL       COMM     DEPTNO                                                                                                                   
+---------- ---------- --------- ---------- --------- ---------- ---------- ----------                                                                                                                   
+      7900 JAMES      CLERK           7698 03-DEC-81        950                    30                                                                                                                   
+
+SQL> SELECT ENAME,SAL,JOB FROM EMP WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='SMITH') AND S (SAL*12) <(SELECT SAL*12 FROM EMP WHERE ENAM='KING');
+SELECT ENAME,SAL,JOB FROM EMP WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='SMITH') AND S (SAL*12) <(SELECT SAL*12 FROM EMP WHERE ENAM='KING')
+                                                                                              *
+ERROR at line 1:
+ORA-00904: "S": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,SAL,JOB FROM EMP WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='SMITH') AND  (SAL*12) <(SELECT SAL*12 FROM EMP WHERE ENAM='KING')
+SQL> /
+SELECT ENAME,SAL,JOB FROM EMP WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='SMITH') AND  (SAL*12) <(SELECT SAL*12 FROM EMP WHERE ENAM='KING')
+                                                                                                                                       *
+ERROR at line 1:
+ORA-00904: "ENAM": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1* SELECT ENAME,SAL,JOB FROM EMP WHERE (SAL*12)>(SELECT SAL*12 FROM EMP WHERE ENAME='SMITH') AND  (SAL*12) <(SELECT SAL*12 FROM EMP WHERE ENAME='KING')
+SQL> /
+
+ENAME             SAL JOB                                                                                                                                                                               
+---------- ---------- ---------                                                                                                                                                                         
+ALLEN            1600 SALESMAN                                                                                                                                                                          
+WARD             1250 SALESMAN                                                                                                                                                                          
+JONES            2975 MANAGER                                                                                                                                                                           
+MARTIN           1250 SALESMAN                                                                                                                                                                          
+BLAKE            2850 MANAGER                                                                                                                                                                           
+CLARK            2450 MANAGER                                                                                                                                                                           
+SCOTT            3000 ANALYST                                                                                                                                                                           
+TURNER           1500 SALESMAN                                                                                                                                                                          
+ADAMS            1100 CLERK                                                                                                                                                                             
+JAMES             950 CLERK                                                                                                                                                                             
+FORD             3000 ANALYST                                                                                                                                                                           
+MILLER           1300 CLERK                                                                                                                                                                             
+
+12 rows selected.
+
+SQL> SPOOL OFF

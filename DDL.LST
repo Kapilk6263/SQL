@@ -1,0 +1,173 @@
+SQL> SET PAGES 200 LINES 200
+SQL> 
+SQL> CREATE TABLE GIRL
+  2  (
+  3  ID NUMBER(4) PRIMARY KEY CHECK(ID>0) CHECK(LENGTH(ID)=4),
+  4  NAME VARCHAR(30) NOT NULL,
+  5  AGE NUMBER(2) ,
+  6  ADDRESS VARCHAR(30),
+  7  PHONO_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(NUMBER)=10));
+PHONO_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(NUMBER)=10))
+                                             *
+ERROR at line 7:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE GIRL
+  2  (
+  3  ID NUMBER(4) PRIMARY KEY CHECK(ID>0) CHECK(LENGTH(ID)=4),
+  4  NAME VARCHAR(30) NOT NULL,
+  5  AGE NUMBER(2) ,
+  6  ADDRESS VARCHAR(30),
+  7* PHONO_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO)=10))
+SQL> /
+PHONO_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO)=10))
+                                             *
+ERROR at line 7:
+ORA-02438: Column check constraint cannot reference other columns 
+
+
+SQL> CREATE TABLE GIRL(ID NUMBER(10) PRIMARY KEY CHECK(ID>0) CHECK(LENGTH(ID)=4NAME VARCHAR(10),AGE NUMBER(2),ADDRESS VARCHAR(20),PHONE_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO)=10))
+  2  
+SQL> ED
+Wrote file afiedt.buf
+
+  1  CREATE TABLE GIRL
+  2  (ID NUMBER(10) PRIMARY KEY CHECK(ID>0) CHECK(LENGTH(ID)=4),
+  3  NAME VARCHAR(10),
+  4  AGE NUMBER(2),
+  5  ADDRESS VARCHAR(20),
+  6* PHONE_NO NUMBER(10) UNIQUE CHECK(PHONE_NO>0) CHECK(LENGTH(PHONE_NO)=10))
+SQL> /
+
+Table created.
+
+SQL> RENAME GIRL TO GIRLS
+  2  ;
+
+Table renamed.
+
+SQL> ALTER TABLE GIRLS
+  2  ADD EMAIL VARCHAR(20) UNIQUE;
+
+Table altered.
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+ EMAIL                                                                                                                      VARCHAR2(20)
+
+SQL> ALTER TABLE GIRLS
+  2  RENAME COLUMN EMAIL TO MAIL_ID;
+
+Table altered.
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+ MAIL_ID                                                                                                                    VARCHAR2(20)
+
+SQL> ALTER TABLE GIRLS
+  2  DROP COLUMN MAIL_ID;
+
+Table altered.
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+
+SQL> ALTER TABLE GIRLS
+  2  ADD GENDER  VARCHAR(10);
+
+Table altered.
+
+SQL> ALTER TABLE GIRLS
+  2  MODIFY GENDER VAECAHR(1);
+MODIFY GENDER VAECAHR(1)
+                     *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  ALTER TABLE GIRLS
+  2* MODIFY GENDER VAECHAR(1)
+SQL> /
+MODIFY GENDER VAECHAR(1)
+                     *
+ERROR at line 2:
+ORA-01735: invalid ALTER TABLE option 
+
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+ GENDER                                                                                                                     VARCHAR2(10)
+
+SQL> ALTER TABLE GIRLS
+  2  MODIFY GENDER VARCHAR(1);
+
+Table altered.
+
+SQL> ALTER TABLE GIRLS
+  2  MODIFY GENDER VARCHAR(1) NOT NULL;
+
+Table altered.
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+ GENDER                                                                                                            NOT NULL VARCHAR2(1)
+
+SQL> ALTER TABLE GIRLS
+  2  ADD EMAIL VARCHAR(20) ;
+
+Table altered.
+
+SQL> ALTER TABLE GIRLS
+  2  ADD CONSTRAINT UK_EMAIL UNIQUE(EMAIL);
+
+Table altered.
+
+SQL> DESC GIRLS
+ Name                                                                                                              Null?    Type
+ ----------------------------------------------------------------------------------------------------------------- -------- ----------------------------------------------------------------------------
+ ID                                                                                                                NOT NULL NUMBER(10)
+ NAME                                                                                                                       VARCHAR2(10)
+ AGE                                                                                                                        NUMBER(2)
+ ADDRESS                                                                                                                    VARCHAR2(20)
+ PHONE_NO                                                                                                                   NUMBER(10)
+ GENDER                                                                                                            NOT NULL VARCHAR2(1)
+ EMAIL                                                                                                                      VARCHAR2(20)
+
+SQL> SPOOL OFF

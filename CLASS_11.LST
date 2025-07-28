@@ -1,0 +1,270 @@
+SQL> SELECT MAX(SAL)
+  2  FROM EMP
+  3  WHERE MAX(SAL)<(SELECT MAX(SAL) FROM EMP );
+WHERE MAX(SAL)<(SELECT MAX(SAL) FROM EMP )
+      *
+ERROR at line 3:
+ORA-00934: group function is not allowed here 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL)
+  2  FROM EMP
+  3* WHERE SAL<(SELECT MAX(SAL) FROM EMP )
+SQL> /
+
+  MAX(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+      3000                                                                                                                                                                                              
+
+SQL> SELECT MIN(SAL)
+  2  FROM EMP
+  3  WHERE SAL >ANY(SELECT MIN(SAL) FROM EMP );
+
+  MIN(SAL)                                                                                                                                                                                              
+----------                                                                                                                                                                                              
+       950                                                                                                                                                                                              
+
+SQL> SELECT ENAME FROM EMP
+  2  
+SQL> SELECT MAX(SAL),ENAME
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL) FROM EMP )
+  4  GROUP BY NAME ;
+GROUP BY NAME 
+         *
+ERROR at line 4:
+ORA-00904: "NAME": invalid identifier 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL),ENAME
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL) FROM EMP )
+  4* GROUP BY ENAME 
+SQL> /
+
+  MAX(SAL) ENAME                                                                                                                                                                                        
+---------- ----------                                                                                                                                                                                   
+      1600 ALLEN                                                                                                                                                                                        
+      2975 JONES                                                                                                                                                                                        
+      3000 FORD                                                                                                                                                                                         
+      2450 CLARK                                                                                                                                                                                        
+      1300 MILLER                                                                                                                                                                                       
+       800 SMITH                                                                                                                                                                                        
+      1250 WARD                                                                                                                                                                                         
+      1250 MARTIN                                                                                                                                                                                       
+      3000 SCOTT                                                                                                                                                                                        
+      1500 TURNER                                                                                                                                                                                       
+      1100 ADAMS                                                                                                                                                                                        
+      2850 BLAKE                                                                                                                                                                                        
+       950 JAMES                                                                                                                                                                                        
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL),SAL,ENAME
+  2  FROM EMP
+  3  WHERE SAL<(SELECT MAX(SAL) FROM EMP )
+  4* GROUP BY SAL,ENAME 
+SQL> /
+
+  MAX(SAL)        SAL ENAME                                                                                                                                                                             
+---------- ---------- ----------                                                                                                                                                                        
+      1600       1600 ALLEN                                                                                                                                                                             
+      1500       1500 TURNER                                                                                                                                                                            
+      1250       1250 MARTIN                                                                                                                                                                            
+      1250       1250 WARD                                                                                                                                                                              
+      1300       1300 MILLER                                                                                                                                                                            
+       800        800 SMITH                                                                                                                                                                             
+      2450       2450 CLARK                                                                                                                                                                             
+      3000       3000 SCOTT                                                                                                                                                                             
+      1100       1100 ADAMS                                                                                                                                                                             
+      2850       2850 BLAKE                                                                                                                                                                             
+      2975       2975 JONES                                                                                                                                                                             
+       950        950 JAMES                                                                                                                                                                             
+      3000       3000 FORD                                                                                                                                                                              
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL),SAL,ENAME
+  2  FROM EMP
+  3  WHERE SAL<ALL(SELECT MAX(SAL) FROM EMP )
+  4* GROUP BY SAL,ENAME 
+SQL> /
+
+  MAX(SAL)        SAL ENAME                                                                                                                                                                             
+---------- ---------- ----------                                                                                                                                                                        
+      1600       1600 ALLEN                                                                                                                                                                             
+      1500       1500 TURNER                                                                                                                                                                            
+      1250       1250 MARTIN                                                                                                                                                                            
+      1250       1250 WARD                                                                                                                                                                              
+      1300       1300 MILLER                                                                                                                                                                            
+       800        800 SMITH                                                                                                                                                                             
+      2450       2450 CLARK                                                                                                                                                                             
+      3000       3000 SCOTT                                                                                                                                                                             
+      1100       1100 ADAMS                                                                                                                                                                             
+      2850       2850 BLAKE                                                                                                                                                                             
+      2975       2975 JONES                                                                                                                                                                             
+       950        950 JAMES                                                                                                                                                                             
+      3000       3000 FORD                                                                                                                                                                              
+
+13 rows selected.
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT MAX(SAL),EMP.ENAME
+  2  FROM EMP
+  3* WHERE SAL<(SELECT MAX(SAL) FROM EMP )
+  4  /
+SELECT MAX(SAL),EMP.ENAME
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL=((SELECT MAX(SAL)
+  4   FROM EMP
+  5* WHERE SAL<(SELECT MAX(SAL) FROM EMP ) )
+SQL> /
+WHERE SAL<(SELECT MAX(SAL) FROM EMP ) )
+                                      *
+ERROR at line 5:
+ORA-00907: missing right parenthesis 
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL=(SELECT MAX(SAL)
+  4               FROM EMP
+  5               WHERE SAL<(SELECT MAX(SAL) 
+  6*                           FROM EMP ) )
+SQL> /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+SCOTT                                                                                                                                                                                                   
+FORD                                                                                                                                                                                                    
+
+SQL> SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3                   WHERE SAL<(SELECT MAX(SAL) FROM EMP ));
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+SALES                                                                                                                                                                                                   
+RESEARCH                                                                                                                                                                                                
+ACCOUNTING                                                                                                                                                                                              
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT DNAME FROM DEPT
+  2  WHERE DEPTNO IN (SELECT DEPTNO FROM EMP
+  3*                  WHERE SAL IN (SELECT MAX(SAL) FROM EMP WHERE SAL <(SELECT MAX(SAL) FROM EMP )))
+SQL> /
+
+DNAME                                                                                                                                                                                                   
+--------------                                                                                                                                                                                          
+RESEARCH                                                                                                                                                                                                
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL IN (SELECT MIN(SAL) FROM EMP
+  4               WHERE SAL<(SELECT MIN(SAL) FROM EMP
+  5                WHERE SAL<(SELECT MIN(SAL) FROM EMP WHERE SAL<(SELECT MIN(SAL) FROM EMP ))));
+
+no rows selected
+
+SQL> SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL = (
+  4      SELECT MIN(SAL)
+  5      FROM EMP
+  6      WHERE SAL > (
+  7          SELECT MIN(SAL)
+  8          FROM EMP
+  9          WHERE SAL > (
+ 10              SELECT MIN(SAL)
+ 11              FROM EMP
+ 12              WHERE SAL > (
+ 13                  SELECT MIN(SAL)
+ 14                  FROM EMP
+ 15              )
+ 16          )
+ 17      )
+ 18  );
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL = (
+  4      SELECT MIN(SAL)
+  5      FROM EMP
+  6      WHERE SAL > (
+  7          SELECT MIN(SAL)
+  8          FROM EMP
+  9          WHERE SAL > (
+ 10              SELECT MIN(SAL)
+ 11              FROM EMP
+ 12              WHERE SAL > (
+ 13                  SELECT MIN(SAL)
+ 14                  FROM EMP
+ 15              )
+ 16          )
+ 17      )
+ 18* )
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT ENAME
+  2  FROM EMP
+  3  WHERE SAL = (
+  4      SELECT MIN(SAL)
+  5      FROM EMP
+  6      WHERE SAL > (
+  7          SELECT MIN(SAL)
+  8          FROM EMP
+  9          WHERE SAL > (
+ 10              SELECT MIN(SAL)
+ 11              FROM EMP
+ 12              WHERE SAL > (
+ 13                  SELECT MIN(SAL)
+ 14                  FROM EMP
+ 15              )
+ 16          )
+ 17      )
+ 18* )
+SQL> /
+
+ENAME                                                                                                                                                                                                   
+----------                                                                                                                                                                                              
+WARD                                                                                                                                                                                                    
+MARTIN                                                                                                                                                                                                  
+
+SQL> SPOOL OFF
