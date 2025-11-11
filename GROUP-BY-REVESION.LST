@@ -1,0 +1,151 @@
+Connected to:
+Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Production
+With the Partitioning, OLAP and Data Mining options
+
+SQL> SET PAGES 200 LINES 200 
+SQL> SELECT COUNT(ENAME) 
+  2  FROM EMP 
+  3  WHERE JOB NOT IN(
+  4  'PRESIDENT') 
+  5  GROUP BT DEPTNO;
+GROUP BT DEPTNO
+      *
+ERROR at line 5:
+ORA-00924: missing BY keyword
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(ENAME)
+  2  FROM EMP
+  3  WHERE JOB NOT IN('PRESIDENT')
+  4* GROUP BY DEPTNO
+SQL> 
+SQL> /
+
+COUNT(ENAME)
+------------
+           6
+           5
+           2
+
+SQL> SELECT SUM(SAL) 
+  2  FROM EMP 
+  3  GROUP BY JOB;
+
+  SUM(SAL)
+----------
+      4150
+      5600
+      5000
+      8275
+      6000
+
+SQL> SELECT COUNT(ENAME)
+  2  FROM EMP 
+  3  WHERE JOB IN('MANAGER') 
+  4  GROUP BY DEPTNO;
+
+COUNT(ENAME)
+------------
+           1
+           1
+           1
+
+SQL> SELECT AVG(SAL) 
+  2  FROM EMP
+  3  WHERE DEPTNO NOT IN (20) 
+  4  GROUP BY DEPTNO;
+
+  AVG(SAL)
+----------
+1566.66667
+2916.66667
+
+SQL> SELECT COUNT(ENAME) 
+  2  FROM EMP 
+  3  WHERE ENAME LIKE '%A%'
+  4  GROUP BY JOB;
+
+COUNT(ENAME)
+------------
+           3
+           2
+           2
+
+SQL> SELECT COUNT(ENAME) 
+  2  FRFOM EMP
+  3  GROUP BY DEPTNO 
+  4  HAVING SAL>2000;
+FRFOM EMP
+      *
+ERROR at line 2:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(ENAME),AVG(SAL)
+  2  FROM EMP
+  3  GROUP BY DEPTNO
+  4* HAVING SAL>2000
+SQL> /
+HAVING SAL>2000
+       *
+ERROR at line 4:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> ED
+Wrote file afiedt.buf
+
+  1  SELECT COUNT(ENAME),AVG(SAL)
+  2  FROM EMP
+  3  WHERE SAL>2000
+  4* GROUP BY DEPTNO
+SQL> /
+
+COUNT(ENAME)   AVG(SAL)
+------------ ----------
+           1       2850
+           3 2991.66667
+           2       3725
+
+SQL> SELECT SUM(SAL),COUNT(ENAME) 
+  2  FROM EMP 
+  3  WHERE JOB IN ('SALESMAN')
+  4  GROUP BY DEPTNO;
+
+  SUM(SAL) COUNT(ENAME)
+---------- ------------
+      5600            4
+
+SQL> SELECT COUNT(ENAME),MAX(SAL) 
+  2  FROM EMP 
+  3  GROUP BY JOB;
+
+COUNT(ENAME)   MAX(SAL)
+------------ ----------
+           4       1300
+           4       1600
+           1       5000
+           3       2975
+           2       3000
+
+SQL> SELECT MAX(SAL) 
+  2  FROM EMP 
+  3  GROUP BY DEPTNO;
+
+  MAX(SAL)
+----------
+      2850
+      3000
+      5000
+
+SQL> SELECT COUNT(SAL) FROM EMP ;
+
+COUNT(SAL)
+----------
+        14
